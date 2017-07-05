@@ -1,7 +1,7 @@
 {
-  "name": "VillageSim",
+  "name": "l3mncakes/civilize",
   "version": "0.0.1",
-  "description": "Village simulation",
+  "description": "World generator.",
   "main": "main.js",
   "dependencies": {
     "immutable": "^3.8.1",
