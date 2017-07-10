@@ -10,7 +10,6 @@ import type { Region } from '../classes/Region.class'
 import { connect } from 'react-redux'
 
 import WorldComponent from '../components/world.component'
-import { HOVER_REGION, UNHOVER_REGION, ACTIVATE_REGION } from '../reducers/regions.reducer'
 import {
     WORLD_ACTION_UPDATE_WIDTH,
     WORLD_ACTION_UPDATE_HEIGHT,

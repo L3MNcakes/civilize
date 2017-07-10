@@ -99,13 +99,27 @@ const WorldReducer : Reducer<WorldState, WorldAction> = (state = defaultState, a
             currentState.isRefining = !currentState.isRefining;
             return currentState;
         case WORLD_ACTION_SET_ACTIVE_REGION:
-            action.payload.isActive = true;
-            currentState.regions = currentState.regions.set(action.payload.key, action.payload);
-            currentState.activeRegion = action.payload.copy();
-            return currentState;
+            return setActiveRegion(action.payload, currentState);
         default:
             return state;
     }
 };
+
+const setActiveRegion = (region: Region, currentState: WorldState): WorldState => {
+    if (currentState.activeRegion) {
+        currentState.activeRegion.isActive = false;
+        currentState.regions = currentState.regions.set(currentState.activeRegion.key, currentState.activeRegion);
+    }
+
+    if (region !== currentState.activeRegion) {
+        region.isActive = true;
+        currentState.regions = currentState.regions.set(region.key, region);
+        currentState.activeRegion = region;
+    } else {
+        currentState.activeRegion = null;
+    }
+
+    return currentState;
+}
 
 export default WorldReducer;
