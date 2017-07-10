@@ -6,9 +6,7 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     source = require('vinyl-source-stream'),
     sourcemaps = require('gulp-sourcemaps'),
-    buffer = require('vinyl-buffer'),
-    exec = require('child_process').exec,
-    sass = require('gulp-sass');
+    buffer = require('vinyl-buffer');
 
 gulp.task('default', ['scripts', 'html'], function() {
     // Default task
@@ -45,27 +43,4 @@ var handleScriptsError = function(err) {
 gulp.task('html', function() {
     gulp.src('./src/**/*.html')
         .pipe(gulp.dest('dist'));
-});
-
-/**
- * CSS task
-gulp.task('css', function() {
-    gulp.src('./src/scss/concise.css-3.4.0/src/concise.scss')
-        .pipe(sass().on('error', sass.logError))
-        .pipe(rename('main.css'))
-        .pipe(gulp.dest('dist/css'));
-});
- **/
-
-/**
- * Flow task
- **/
-gulp.task('flow', function() {
-    exec('npm run-script flow', function(err, stdout, stderr) {
-        if(err) {
-            gutil.log(gutil.colors.red(stderr));
-        } else {
-            gutil.log(stdout);
-        }
-    });
 });

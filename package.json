@@ -1,11 +1,10 @@
 {
-  "name": "l3mncakes/civilize",
+  "name": "l3mncakes-civilize",
   "version": "0.0.1",
   "description": "World generator.",
   "main": "main.js",
   "dependencies": {
     "immutable": "^3.8.1",
-    "localforage": "~1.4.2",
     "random-js": "~1.0.8",
     "react": "^15.5.0",
     "react-dom": "^15.0.0",
@@ -24,7 +23,6 @@
     "gulp": "~3.9.1",
     "gulp-browserify": "~0.5.1",
     "gulp-rename": "~1.2.2",
-    "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "~1.6.0",
     "gulp-uglify": "~1.5.4",
     "gulp-util": "~3.0.7",
