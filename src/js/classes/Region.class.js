@@ -5,18 +5,18 @@
  * @flow
  */
 
-import type { AppState } from '../reducers/main.reducer'
-import type { RegionsMap } from '../reducers/regions.reducer'
+import type { AppState } from '../reducers/main.reducer';
+import type { RegionsMap } from '../reducers/regions.reducer';
 
-import { store } from '../main'
+import { store } from '../main';
 
 export type RegionTerrain = (
-    'REGION_TERRAIN_NONE' |
-    'REGION_TERRAIN_GRASS' |
-    'REGION_TERRAIN_DESERT' |
-    'REGION_TERRAIN_MOUNTAIN' |
-    'REGION_TERRAIN_WATER'
-)
+    RegionTerrainTypes.NONE |
+    RegionTerrainTypes.GRASS |
+    RegionTerrainTypes.DESERT |
+    RegionTerrainTypes.MOUNTAIN |
+    RegionTerrainTypes.WATER
+);
 
 type RegionProps = {
     key?: string,
@@ -25,13 +25,16 @@ type RegionProps = {
     isActive?: boolean,
     isHover?: boolean,
     terrain?: RegionTerrain,
-}
+};
 
-export const REGION_TERRAIN_NONE = 'REGION_TERRAIN_NONE';
-export const REGION_TERRAIN_GRASS = 'REGION_TERRAIN_GRASS';
-export const REGION_TERRAIN_DESERT = 'REGION_TERRAIN_DESERT';
-export const REGION_TERRAIN_MOUNTAIN = 'REGION_TERRAIN_MOUNTAIN';
-export const REGION_TERRAIN_WATER = 'REGION_TERRAIN_WATER';
+
+export const RegionTerrainTypes = {
+    NONE: 'REGION_TERRAIN_NONE',
+    GRASS: 'REGION_TERRAIN_GRASS',
+    DESERT: 'REGION_TERRAIN_DESERT',
+    MOUNTAIN: 'REGION_TERRAIN_MOUNTAIN',
+    WATER: 'REGION_TERRAIN_WATER',
+};
 
 export class Region
 {
@@ -49,7 +52,7 @@ export class Region
             this.y = region.y !== undefined ? region.y : 0;
             this.isActive = region.isActive !== undefined ? region.isActive : false;
             this.isHover = region.isHover !== undefined ? region.isHover : false;
-            this.terrain = region.terrain !== undefined ? region.terrain : REGION_TERRAIN_NONE;
+            this.terrain = region.terrain !== undefined ? region.terrain : RegionTerrainTypes.NONE;
         }
     }
 
@@ -120,18 +123,18 @@ export class Region
     }
 
     isGrass(): boolean {
-        return this.terrain === REGION_TERRAIN_GRASS;
+        return this.terrain === RegionTerrainTypes.GRASS;
     }
 
     isWater(): boolean {
-        return this.terrain === REGION_TERRAIN_WATER;
+        return this.terrain === RegionTerrainTypes.WATER;
     }
 
     isMountain(): boolean {
-        return this.terrain === REGION_TERRAIN_MOUNTAIN;
+        return this.terrain === RegionTerrainTypes.MOUNTAIN;
     }
 
     isDesert(): boolean {
-        return this.terrain === REGION_TERRAIN_DESERT;
+        return this.terrain === RegionTerrainTypes.DESERT;
     }
 }

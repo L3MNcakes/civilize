@@ -11,13 +11,7 @@ import type { RegionTerrain } from './classes/Region.class';
 // IMPORTS
 import Random from 'random-js';
 import { Map } from 'immutable';
-import {
-    Region,
-    REGION_TERRAIN_GRASS,
-    REGION_TERRAIN_DESERT,
-    REGION_TERRAIN_MOUNTAIN,
-    REGION_TERRAIN_WATER
-} from './classes/Region.class';
+import { Region, RegionTerrainTypes } from './classes/Region.class';
 
 /**
  * An array of terrains which the world generator will randomly pick from
@@ -32,13 +26,13 @@ import {
  * the world generation settings UI.
  */
 const useableTerrains: RegionTerrain[] = [
-    REGION_TERRAIN_GRASS,
-    REGION_TERRAIN_GRASS,
-    REGION_TERRAIN_GRASS,
-    REGION_TERRAIN_DESERT,
-    REGION_TERRAIN_MOUNTAIN,
-    REGION_TERRAIN_WATER,
-    REGION_TERRAIN_WATER,
+    RegionTerrainTypes.GRASS,
+    RegionTerrainTypes.GRASS,
+    RegionTerrainTypes.GRASS,
+    RegionTerrainTypes.DESERT,
+    RegionTerrainTypes.MOUNTAIN,
+    RegionTerrainTypes.WATER,
+    RegionTerrainTypes.WATER,
 ];
 
 /**

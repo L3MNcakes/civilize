@@ -9,13 +9,7 @@ import type { RegionsDispatch } from '../reducers/regions.reducer'
 import type { RegionTerrain } from '../classes/Region.class'
 
 import React from 'react'
-import {
-    Region,
-    REGION_TERRAIN_GRASS,
-    REGION_TERRAIN_DESERT,
-    REGION_TERRAIN_MOUNTAIN,
-    REGION_TERRAIN_WATER,
-} from '../classes/Region.class'
+import { Regoion, RegionTerrainTypes } from '../classes/Region.class';
 
 type Props = {
     region: Region,
@@ -25,13 +19,13 @@ type Props = {
 
 const getTerrainColor = (terrain: RegionTerrain): string => {
     switch(terrain) {
-        case REGION_TERRAIN_GRASS:
+        case RegionTerrainTypes.GRASS:
             return 'green'
-        case REGION_TERRAIN_DESERT:
+        case RegionTerrainTypes.DESERT:
             return 'tan'
-        case REGION_TERRAIN_MOUNTAIN:
+        case RegionTerrainTypes.MOUNTAIN:
             return 'saddlebrown'
-        case REGION_TERRAIN_WATER:
+        case RegionTerrainTypes.WATER:
             return 'blue'
         default:
             return 'white'

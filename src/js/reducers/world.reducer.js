@@ -23,40 +23,45 @@ export type WorldState = {
 };
 
 export type WorldAction = {
-    type: WORLD_ACTION_SET_REGIONS,
+    type: WorldActionTypes.SET_REGIONS,
     payload: Map<string,region>
 } | {
-    type: WORLD_ACTION_ADD_REGION,
+    type: WorldActionTypes.ADD_REGION,
     payload: Region
 } | {
-    type: WORLD_ACTION_UPDATE_WIDTH,
+    type: WorldActionTypes.UPDATE_WIDTH,
     payload: number
 } | {
-    type: WORLD_ACTION_UPDATE_HEIGHT,
+    type: WorldActionTypes.UPDATE_HEIGHT,
     payload: number
 } | {
-    type: WORLD_ACTION_UPDATE_TILESIZE,
+    type: WorldActionTypes.UPDATE_TILESIZE,
     payload: number
 } | {
-    type: WORLD_ACTION_GENERATE_REGIONS,
+    type: WorldActionTypes.GENERATE_REGIONS,
     payload: any
 } | {
-    type: WORLD_ACTION_REFINE_NEXT,
+    type: WorldActionTypes.REFINE_NEXT,
     payload: any
 } | {
-    type: WORLD_ACTION_SET_ACTIVE_REGION,
+    type: WorldActionTypes.TOGGLE_REFINE,
+    payload: any
+} | {
+    type: WorldActionTypes.SET_ACTIVE_REGION,
     payload: Region
 };
 
-export const WORLD_ACTION_SET_REGIONS = 'WORLD_ACTION_SET_REGIONS';
-export const WORLD_ACTION_ADD_REGION = 'WORLD_ACTION_ADD_REGION';
-export const WORLD_ACTION_UPDATE_WIDTH = 'WORLD_ACTION_UPDATE_WIDTH';
-export const WORLD_ACTION_UPDATE_HEIGHT = 'WORLD_ACTION_UPDATE_HEIGHT';
-export const WORLD_ACTION_UPDATE_TILESIZE = 'WORLD_ACTION_UPDATE_TILESIZE';
-export const WORLD_ACTION_GENERATE_REGIONS = ' WORLD_ACTION_GENERATE_REGIONS';
-export const WORLD_ACTION_REFINE_NEXT = 'WORLD_ACTION_REFINE_NEXT';
-export const WORLD_ACTION_TOGGLE_REFINING = 'WORLD_ACTION_TOGGLE_REFINING';
-export const WORLD_ACTION_SET_ACTIVE_REGION = 'WORLD_ACTION_SET_ACTIVE_REGION';
+export const WorldActionTypes = {
+    SET_REGIONS: 'WORLD_ACTION_SET_REGIONS',
+    ADD_REGION: 'WORLD_ACTION_SET_REGION',
+    UPDATE_WIDTH: 'WORLD_ACTION_UPDATE_WIDTH',
+    UPDATE_HEIGHT: 'WORLD_ACTION_UPDATE_HEIGHT',
+    UPDATE_TILESIZE: 'WORLD_ACTION_UPDATE_TILESIZE',
+    GENERATE_REGIONS: 'WORLD_ACTION_GENERATE_REGIONS',
+    REFINE_NEXT: 'WORLD_ACTION_REFINE_NEXT',
+    TOGGLE_REFINE: 'WORLD_ACTION_TOGGLE_REFINE',
+    SET_ACTIVE_REGION: 'WORLD_ACTION_SET_ACTIVE_REGION',
+};
 
 const defaultState = {
     worldWidth: 25,     // Width of the world in number of tiles
@@ -71,34 +76,34 @@ const WorldReducer : Reducer<WorldState, WorldAction> = (state = defaultState, a
     let currentState: WorldState = Object.assign({}, state);
 
     switch(action.type) {
-        case WORLD_ACTION_SET_REGIONS:
+        case WorldActionTypes.SET_REGIONS:
             currentState.regions = action.payload;
             return currentState;
-        case WORLD_ACTION_ADD_REGION:
+        case WorldActionTypes.ADD_REGION:
             currentState.regions.set(action.payload);
             return currentState;
-        case WORLD_ACTION_UPDATE_WIDTH:
+        case WorldActionTypes.UPDATE_WIDTH:
             currentState.worldWidth = action.payload;
             return currentState;
-        case WORLD_ACTION_UPDATE_HEIGHT:
+        case WorldActionTypes.UPDATE_HEIGHT:
             currentState.worldHeight = action.payload;
             return currentState;
-        case WORLD_ACTION_UPDATE_TILESIZE:
+        case WorldActionTypes.UPDATE_TILESIZE:
             currentState.tileSize = action.payload;
             return currentState;
-        case WORLD_ACTION_GENERATE_REGIONS:
+        case WorldActionTypes.GENERATE_REGIONS:
             currentState.regions = generateRandomWorld(
                 currentState.worldWidth,
                 currentState.worldHeight
             );
             return currentState;
-        case WORLD_ACTION_REFINE_NEXT:
+        case WorldActionTypes.REFINE_NEXT:
             currentState.regions = refineWorld(currentState.regions);
             return currentState;
-        case WORLD_ACTION_TOGGLE_REFINING:
+        case WorldActionTypes.TOGGLE_REFINE:
             currentState.isRefining = !currentState.isRefining;
             return currentState;
-        case WORLD_ACTION_SET_ACTIVE_REGION:
+        case WorldActionTypes.SET_ACTIVE_REGION:
             return setActiveRegion(action.payload, currentState);
         default:
             return state;
