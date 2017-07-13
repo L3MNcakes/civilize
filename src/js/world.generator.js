@@ -101,7 +101,7 @@ export const refineWorld = (
  * @return {Map<string,Region} - A new Immutable map containing the refined neighboring regions.
  */
 const refineRegion = (region: Region, currentRegions: Map<string, Region>): Map<string, Region> => {
-    let surroundingAreas: ?Region[] = [
+    let surroundingAreas: Region[] = [
         region.getNorth(),
         region.getSouth(),
         region.getEast(),
@@ -112,7 +112,7 @@ const refineRegion = (region: Region, currentRegions: Map<string, Region>): Map<
         region.getSouthWest()
     ];
 
-    let randomRegions: ?Region[] = Random.sample(Random.engines.nativeMath, surroundingAreas, 4);
+    let randomRegions: Region[] = Random.sample(Random.engines.nativeMath, surroundingAreas, 4);
 
     randomRegions.forEach( (randomRegion: ?Region) => {
         if (randomRegion) {

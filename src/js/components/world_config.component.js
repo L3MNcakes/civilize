@@ -14,6 +14,7 @@ type Props = {
     changeTilesize: (newSize: number) => any,
     clickGenerateRegions: () => any,
     clickRefineNext: () => any,
+    clickToggleRefine: () => any,
 };
 
 const wrapperStyles = {

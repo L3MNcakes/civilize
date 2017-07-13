@@ -7,7 +7,6 @@
 
 // TYPES
 import type { AppState } from '../reducers/main.reducer';
-import type { RegionsDispatch } from '../reducers/regions.reducer';
 import type { Region } from '../classes/Region.class';
 
 // IMPORTS
@@ -65,13 +64,15 @@ const detailsStyles = {
 export default class WorldComponent extends Component
 {
 
-    constructor(props) {
+    refineInterval: any;
+
+    constructor(props: Props) {
         super(props);
 
         this.refineInterval = null;
     }
 
-    componentWillUpdate(nextProps, nextState) {
+    componentWillUpdate(nextProps: Props, nextState: any) {
         if (nextProps.currentState.world.isRefining && !this.refineInterval) {
             this.refineInterval = setInterval( () => nextProps.clickRefineNext(), 100 );
         } else if (!nextProps.currentState.world.isRefining && this.refineInterval) {

@@ -5,11 +5,10 @@
  * @flow
  */
 
-import type { RegionsDispatch } from '../reducers/regions.reducer'
 import type { RegionTerrain } from '../classes/Region.class'
 
 import React from 'react'
-import { Regoion, RegionTerrainTypes } from '../classes/Region.class';
+import { Region, RegionTerrainTypes } from '../classes/Region.class';
 
 type Props = {
     region: Region,

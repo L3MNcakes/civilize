@@ -23,32 +23,8 @@ export type WorldState = {
 };
 
 export type WorldAction = {
-    type: WorldActionTypes.SET_REGIONS,
-    payload: Map<string,region>
-} | {
-    type: WorldActionTypes.ADD_REGION,
-    payload: Region
-} | {
-    type: WorldActionTypes.UPDATE_WIDTH,
-    payload: number
-} | {
-    type: WorldActionTypes.UPDATE_HEIGHT,
-    payload: number
-} | {
-    type: WorldActionTypes.UPDATE_TILESIZE,
-    payload: number
-} | {
-    type: WorldActionTypes.GENERATE_REGIONS,
-    payload: any
-} | {
-    type: WorldActionTypes.REFINE_NEXT,
-    payload: any
-} | {
-    type: WorldActionTypes.TOGGLE_REFINE,
-    payload: any
-} | {
-    type: WorldActionTypes.SET_ACTIVE_REGION,
-    payload: Region
+    type: string,
+    payload: Map<string,Region> | Region | number | null
 };
 
 export const WorldActionTypes = {
@@ -77,19 +53,27 @@ const WorldReducer : Reducer<WorldState, WorldAction> = (state = defaultState, a
 
     switch(action.type) {
         case WorldActionTypes.SET_REGIONS:
-            currentState.regions = action.payload;
+            if (action.payload instanceof Map) {
+                currentState.regions = action.payload;
+            }
             return currentState;
         case WorldActionTypes.ADD_REGION:
             currentState.regions.set(action.payload);
             return currentState;
         case WorldActionTypes.UPDATE_WIDTH:
-            currentState.worldWidth = action.payload;
+            if (typeof action.payload == 'number') {
+                currentState.worldWidth = action.payload;
+            }
             return currentState;
         case WorldActionTypes.UPDATE_HEIGHT:
-            currentState.worldHeight = action.payload;
+            if (typeof action.payload == 'number') {
+                currentState.worldHeight = action.payload;
+            }
             return currentState;
         case WorldActionTypes.UPDATE_TILESIZE:
-            currentState.tileSize = action.payload;
+            if (typeof action.payload == 'number') {
+                currentState.tileSize = action.payload;
+            }
             return currentState;
         case WorldActionTypes.GENERATE_REGIONS:
             currentState.regions = generateRandomWorld(
@@ -104,7 +88,9 @@ const WorldReducer : Reducer<WorldState, WorldAction> = (state = defaultState, a
             currentState.isRefining = !currentState.isRefining;
             return currentState;
         case WorldActionTypes.SET_ACTIVE_REGION:
-            return setActiveRegion(action.payload, currentState);
+            if (action.payload instanceof Region) {
+                return setActiveRegion(action.payload, currentState);
+            }
         default:
             return state;
     }

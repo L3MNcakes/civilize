@@ -14,7 +14,6 @@ import { createStore } from 'redux'
 
 import WorldContainer from './containers/world.container'
 import MainReducer from './reducers/main.reducer'
-import { generateWorld, refineWorld } from './world.generator'
 
 export let store: Store = createStore(MainReducer)
 

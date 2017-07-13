@@ -6,16 +6,15 @@
  */
 
 import type { AppState } from '../reducers/main.reducer';
-import type { RegionsMap } from '../reducers/regions.reducer';
 
 import { store } from '../main';
 
 export type RegionTerrain = (
-    RegionTerrainTypes.NONE |
-    RegionTerrainTypes.GRASS |
-    RegionTerrainTypes.DESERT |
-    RegionTerrainTypes.MOUNTAIN |
-    RegionTerrainTypes.WATER
+    'REGION_TERRAIN_NONE' |
+    'REGION_TERRAIN_GRASS' |
+    'REGION_TERRAIN_DESERT' |
+    'REGION_TERRAIN_MOUNTAIN' |
+    'REGION_TERRAIN_WATER'
 );
 
 type RegionProps = {
@@ -56,9 +55,9 @@ export class Region
         }
     }
 
-    static fetchRegion(key: string): ?Region {
+    static fetchRegion(key: string): Region {
         let state: AppState = store.getState();
-        let region: Region = state.world.regions.get(key);
+        let region: Region = state.world.regions.get(key, new Region());
 
         return region;
     }
@@ -74,52 +73,67 @@ export class Region
         });
     }
 
-    getNorth(): ?Region {
+    getNorth(): Region {
         let key: string = 'region-'+this.x+'-'+(this.y-1);
 
         return Region.fetchRegion(key);
     }
 
-    getSouth(): ?Region {
+    getSouth(): Region {
         let key: string = 'region-'+this.x+'-'+(this.y+1);
 
         return Region.fetchRegion(key);
     }
 
-    getWest(): ?Region {
+    getWest(): Region {
         let key: string = 'region-'+(this.x-1)+'-'+this.y;
 
         return Region.fetchRegion(key);
     }
 
-    getEast(): ?Region {
+    getEast(): Region {
         let key: string = 'region-'+(this.x+1)+'-'+this.y;
 
         return Region.fetchRegion(key);
     }
 
-    getNorthWest(): ?Region {
+    getNorthWest(): Region {
         let key: string = 'region-'+(this.x-1)+'-'+(this.y-1);
 
         return Region.fetchRegion(key);
     }
 
-    getNorthEast(): ?Region {
+    getNorthEast(): Region {
         let key: string = 'region-'+(this.x+1)+'-'+(this.y-1);
 
         return Region.fetchRegion(key);
     }
 
-    getSouthWest(): ?Region {
+    getSouthWest(): Region {
         let key: string = 'region-'+(this.x-1)+'-'+(this.y+1);
 
         return Region.fetchRegion(key);
     }
 
-    getSouthEast(): ?Region {
+    getSouthEast(): Region {
         let key: string = 'region-'+(this.x+1)+'-'+(this.y+1);
 
         return Region.fetchRegion(key);
+    }
+
+    getSurroundingRegions(): Array<Region> {
+        let surroundingRegions = [
+            this.getNorth(),
+            this.getSouth(),
+            this.getEast(),
+            this.getWest(),
+            this.getNorthWest(),
+            this.getNorthEast(),
+            this.getSouthWest(),
+            this.getSouthEast(),
+        ];
+
+        return surroundingRegions.filter(Boolean);
     }
 
     isGrass(): boolean {
