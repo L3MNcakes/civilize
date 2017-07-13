@@ -89,8 +89,9 @@ const WorldReducer : Reducer<WorldState, WorldAction> = (state = defaultState, a
             return currentState;
         case WorldActionTypes.SET_ACTIVE_REGION:
             if (action.payload instanceof Region) {
-                return setActiveRegion(action.payload, currentState);
+                currentState = setActiveRegion(action.payload, currentState);
             }
+            return currentState;
         default:
             return state;
     }

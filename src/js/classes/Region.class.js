@@ -45,14 +45,12 @@ export class Region
     terrain: RegionTerrain;
 
     constructor(region: ?RegionProps) {
-        if(region) {
-            this.key = region.key !== undefined ? region.key : '';
-            this.x = region.x !== undefined ? region.x : 0;
-            this.y = region.y !== undefined ? region.y : 0;
-            this.isActive = region.isActive !== undefined ? region.isActive : false;
-            this.isHover = region.isHover !== undefined ? region.isHover : false;
-            this.terrain = region.terrain !== undefined ? region.terrain : RegionTerrainTypes.NONE;
-        }
+        this.key = region && region.key !== undefined ? region.key : '';
+        this.x = region && region.x !== undefined ? region.x : 0;
+        this.y = region && region.y !== undefined ? region.y : 0;
+        this.isActive = region && region.isActive !== undefined ? region.isActive : false;
+        this.isHover = region && region.isHover !== undefined ? region.isHover : false;
+        this.terrain = region && region.terrain !== undefined ? region.terrain : RegionTerrainTypes.NONE;
     }
 
     static fetchRegion(key: string): Region {
@@ -133,7 +131,7 @@ export class Region
             this.getSouthEast(),
         ];
 
-        return surroundingRegions.filter(Boolean);
+        return surroundingRegions.filter( r => !r.isNone() );
     }
 
     isGrass(): boolean {
@@ -150,5 +148,9 @@ export class Region
 
     isDesert(): boolean {
         return this.terrain === RegionTerrainTypes.DESERT;
+    }
+
+    isNone(): boolean {
+        return this.terrain === RegionTerrainTypes.NONE;
     }
 }
