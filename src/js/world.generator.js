@@ -31,7 +31,7 @@ const useableTerrains: RegionTerrain[] = [
     RegionTerrainTypes.GRASS,
     RegionTerrainTypes.DESERT,
     RegionTerrainTypes.MOUNTAIN,
-    RegionTerrainTypes.WATER,
+    RegionTerrainTypes.MOUNTAIN,
     RegionTerrainTypes.WATER,
 ];
 
@@ -82,7 +82,11 @@ export const generateRandomWorld = (
 export const refineWorld = (
     currentRegions: Map<string, Region>
 ): Map<string, Region> => {
-    let shuffledKeys = Random.sample(Random.engines.nativeMath, currentRegions.keySeq().toArray(), currentRegions.size / 100);
+    let shuffledKeys = Random.sample(
+        Random.engines.nativeMath,
+        currentRegions.keySeq().toArray(),
+        5
+    );
 
     for (let key of shuffledKeys) {
         let region = currentRegions.get(key);
@@ -102,14 +106,22 @@ export const refineWorld = (
  * @return {Map<string,Region} - A new Immutable map containing the refined neighboring regions.
  */
 const refineRegion = (region: Region, currentRegions: Map<string, Region>): Map<string, Region> => {
-    let surroundingAreas: Region[] = region.getSurroundingRegions();
-    let randomRegions: Region[] = Random.sample(Random.engines.nativeMath, surroundingAreas, 3);
+    let cardinalAreas: Region[] = region.getCardinalRegions();
+    let diagonalAreas: Region[] = region.getDiagonalRegions();
+    let randomDiagonals: Region[] = Random.sample(
+        Random.engines.nativeMath,
+        diagonalAreas,
+        diagonalAreas.length / 2
+    );
 
-    randomRegions.forEach( (randomRegion: ?Region) => {
-        if (randomRegion) {
-            randomRegion.terrain = region.terrain;
-            currentRegions = currentRegions.set(randomRegion.key, randomRegion);
-        }
+    cardinalAreas.forEach( (cardinalRegion: Region) => {
+        cardinalRegion.terrain = region.terrain;
+        currentRegions = currentRegions.set(cardinalRegion.key, cardinalRegion);
+    });
+
+    randomDiagonals.forEach( (diagonalRegion: Region) => {
+        diagonalRegion.terrain = region.terrain;
+        currentRegions = currentRegions.set(diagonalRegion.key, diagonalRegion);
     });
 
     return currentRegions;

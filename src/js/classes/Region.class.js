@@ -134,6 +134,28 @@ export class Region
         return surroundingRegions.filter( r => !r.isNone() );
     }
 
+    getCardinalRegions(): Array<Region> {
+        let cardinalRegions = [
+            this.getNorth(),
+            this.getSouth(),
+            this.getEast(),
+            this.getWest(),
+        ];
+
+        return cardinalRegions.filter( r => !r.isNone() );
+    }
+
+    getDiagonalRegions(): Array<Region> {
+        let diagonalRegions = [
+            this.getNorthEast(),
+            this.getNorthWest(),
+            this.getSouthEast(),
+            this.getSouthWest(),
+        ];
+
+        return diagonalRegions.filter( r => !r.isNone() );
+    }
+
     isGrass(): boolean {
         return this.terrain === RegionTerrainTypes.GRASS;
     }
