@@ -5,7 +5,7 @@
  * @flow
  */
 
-import type { AppState } from '../reducers/main.reducer';
+import type { MainState } from '../reducers/main.reducer';
 
 import { store } from '../main';
 
@@ -54,7 +54,7 @@ export class Region
     }
 
     static fetchRegion(key: string): Region {
-        let state: AppState = store.getState();
+        let state: MainState = store.getState();
         let region: Region = state.world.regions.get(key, new Region());
 
         return region;

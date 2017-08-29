@@ -35,8 +35,7 @@ const calcStyles = (region: Region, tileSize: number) => {
     let size = tileSize + "px",
         left = region.x * (tileSize + 1) + 1,
         top = region.y * (tileSize + 1) + 1,
-        backgroundColor = getTerrainColor(region.terrain),
-        border = region.isActive ? '1px solid black' : '0px none';
+        backgroundColor = region.isActive ? '#F00' : getTerrainColor(region.terrain);
 
     return {
         width: size,
@@ -45,7 +44,6 @@ const calcStyles = (region: Region, tileSize: number) => {
         left,
         top,
         backgroundColor,
-        border,
     }
 }
 

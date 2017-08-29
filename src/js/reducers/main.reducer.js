@@ -5,16 +5,18 @@
  * @flow
  */
 
-import type { WorldState } from './world.reducer'
-import { combineReducers } from 'redux'
-import WorldReducer from './world.reducer'
+import type { WorldState } from './world.reducer';
+import type { AppState } from './app.reducer';
+import { combineReducers } from 'redux';
+import WorldReducer from './world.reducer';
+import { AppReducer } from './app.reducer';
 
-export type AppState = {
-    world: WorldState
-}
+export type MainState = {
+    world: WorldState,
+    app: AppState,
+};
 
-const MainReducer = combineReducers({
-    world: WorldReducer
-})
-
-export default MainReducer
+export const MainReducer = combineReducers({
+    world: WorldReducer,
+    app: AppReducer,
+});

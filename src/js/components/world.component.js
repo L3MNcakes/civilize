@@ -6,7 +6,7 @@
  */
 
 // TYPES
-import type { AppState } from '../reducers/main.reducer';
+import type { MainState } from '../reducers/main.reducer';
 import type { Region } from '../classes/Region.class';
 
 // IMPORTS
@@ -16,10 +16,7 @@ import { WorldConfigComponent } from './world_config.component';
 import { TileDetailsComponent } from './tile_details.component';
 
 type Props = {
-    currentState: AppState,
-    changeHeight: (newHeight: number) => any,
-    changeWidth: (newWidth: number) => any,
-    changeTilesize: (newSize: number) => any,
+    currentState: MainState,
     clickGenerateRegions: () => any,
     clickRefineNext: () => any,
     clickRegion: (region: Region) => any,
@@ -33,7 +30,7 @@ const renderRegions = (currentState, clickRegion) => {
             <RegionComponent
                 key = {key}
                 region = {region}
-                tileSize = {currentState.world.tileSize}
+                tileSize = {currentState.world.settings.tileSize}
                 clickRegion = {clickRegion}
             />
         )
@@ -42,9 +39,9 @@ const renderRegions = (currentState, clickRegion) => {
     return render
 }
 
-const calcStyles = (currentState: AppState) => {
-    let width: number = currentState.world.worldWidth * currentState.world.tileSize + currentState.world.worldWidth + 1
-    let height: number = currentState.world.worldHeight * currentState.world.tileSize + currentState.world.worldHeight + 1
+const calcStyles = (currentState: MainState) => {
+    let width: number = currentState.world.settings.width * currentState.world.settings.tileSize + currentState.world.settings.width + 1
+    let height: number = currentState.world.settings.height * currentState.world.settings.tileSize + currentState.world.settings.height + 1
 
     return {
         width: width + "px",
@@ -54,11 +51,6 @@ const calcStyles = (currentState: AppState) => {
         margin: "0px auto",
         overflow: "hidden"
     }
-}
-
-const detailsStyles = {
-    margin: '5px auto',
-    width: '700px',
 }
 
 export default class WorldComponent extends Component
@@ -86,20 +78,6 @@ export default class WorldComponent extends Component
             <div>
                 <div style={calcStyles(this.props.currentState)}>
                     {renderRegions(this.props.currentState, this.props.clickRegion)}
-                </div>
-                <div style={detailsStyles}>
-                    <WorldConfigComponent
-                        currentState={this.props.currentState}
-                        changeHeight={this.props.changeHeight}
-                        changeWidth={this.props.changeWidth}
-                        changeTilesize={this.props.changeTilesize}
-                        clickGenerateRegions={this.props.clickGenerateRegions}
-                        clickRefineNext={this.props.clickRefineNext}
-                        clickToggleRefine={this.props.clickToggleRefine}
-                    />
-                    <TileDetailsComponent
-                        region={this.props.currentState.world.activeRegion}
-                    />
                 </div>
             </div>
         );

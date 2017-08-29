@@ -17,21 +17,6 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-    changeHeight: (newHeight: number) => ({
-        type: WorldActionTypes.UPDATE_HEIGHT,
-        payload: parseInt(newHeight, 10)
-    }),
-
-    changeWidth: (newWidth: number) => ({
-        type: WorldActionTypes.UPDATE_WIDTH,
-        payload: parseInt(newWidth, 10)
-    }),
-
-    changeTilesize: (newSize: number) => ({
-        type: WorldActionTypes.UPDATE_TILESIZE,
-        payload: parseInt(newSize, 10)
-    }),
-
     clickGenerateRegions: () => ({
         type: WorldActionTypes.GENERATE_REGIONS,
         payload: {}

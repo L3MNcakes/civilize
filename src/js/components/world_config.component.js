@@ -47,7 +47,7 @@ export const WorldConfigComponent = ({
                 type="text"
                 style={inputStyles}
                 onBlur={ (evt) => changeWidth(evt.target.value) }
-                defaultValue={currentState.world.worldWidth}
+                defaultValue={currentState.world.settings.width}
             />
         </div>
         <div>
@@ -56,7 +56,7 @@ export const WorldConfigComponent = ({
                 type="text"
                 style={inputStyles}
                 onBlur={ (evt) => changeHeight(evt.target.value) }
-                defaultValue={currentState.world.worldHeight}
+                defaultValue={currentState.world.settings.height}
             />
         </div>
         <div>
