@@ -8,3 +8,4 @@ flow-typed
 
 [options]
 esproposal.class_instance_fields=enable
+suppress_comment=\\(.\\|\n\\)*\\$FlowFixMe

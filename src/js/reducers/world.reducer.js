@@ -10,7 +10,7 @@ import type { Reducer, Action } from 'redux';
 
 // IMPORTS
 import { Map } from 'immutable';
-import { Region } from '../classes/Region.class';
+import { Region, RegionTerrainTypes } from '../classes/Region.class';
 import { generateRandomWorld, refineWorld } from '../world.generator';
 
 export type WorldState = {
@@ -19,6 +19,12 @@ export type WorldState = {
         height: number,
         tileSize: number,
         cycles: number,
+        terrainWeights: {
+            grass: number,
+            desert: number,
+            mountain: number,
+            water: number,
+        }
     },
     regions: Map<string,Region>,
     isRefining: boolean,
@@ -43,6 +49,7 @@ export const WorldActionTypes = {
     TOGGLE_REFINE: 'WORLD_ACTION_TOGGLE_REFINE',
     SET_ACTIVE_REGION: 'WORLD_ACTION_SET_ACTIVE_REGION',
     SET_WORLD_SETTING: 'WORLD_ACTION_SET_WORLD_SETTINGS',
+    SET_TERRAIN_WEIGHT: 'WORLD_ACTION_SET_TERRAIN_WEIGHT',
 };
 
 const defaultState = {
@@ -51,6 +58,12 @@ const defaultState = {
         height: 25,
         tileSize: 15,
         cycles: 200,
+        terrainWeights: {
+            grass: 1,
+            desert: 1,
+            mountain: 1,
+            water: 1,
+        }
     },
     regions: new Map(), // Map of all current regions
     isRefining: false,  // Whether or not the world regions are currently being refined
@@ -72,7 +85,8 @@ const WorldReducer : Reducer<WorldState, WorldAction> = (state = defaultState, a
         case WorldActionTypes.GENERATE_REGIONS:
             currentState.regions = generateRandomWorld(
                 currentState.settings.width,
-                currentState.settings.height
+                currentState.settings.height,
+                currentState.settings.terrainWeights
             );
             return currentState;
         case WorldActionTypes.REFINE_NEXT:
@@ -89,6 +103,11 @@ const WorldReducer : Reducer<WorldState, WorldAction> = (state = defaultState, a
         case WorldActionTypes.SET_WORLD_SETTING:
             if (action.payload && action.payload.setting && action.payload.value) {
                 currentState.settings[action.payload.setting] = action.payload.value;
+            }
+            return currentState;
+        case WorldActionTypes.SET_TERRAIN_WEIGHT:
+            if (action.payload && action.payload.terrainType && action.payload.value) {
+                currentState.settings.terrainWeights[action.payload.terrainType] = action.payload.value;
             }
             return currentState;
         default:

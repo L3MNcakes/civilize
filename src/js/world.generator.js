@@ -14,26 +14,89 @@ import { Map } from 'immutable';
 import { Region, RegionTerrainTypes } from './classes/Region.class';
 
 /**
- * An array of terrains which the world generator will randomly pick from
- * to decide the terrain of a newly created region.
- *
- * A single entry per terrain type will result in an even distribution of
- * regions with each terrain type. Multiple entries of the same terrain type
- * is a way to weight the distribution so that certain terrain types are more
- * likely to show up than others.
- *
- * @TODO Allow usable terrain types and weight values to be configurable through
- * the world generation settings UI.
+ * A map of the setting strings to the actual terrain type.
+ * @TODO Find a way to make this not necessary
  */
-const useableTerrains: RegionTerrain[] = [
-    RegionTerrainTypes.GRASS,
-    RegionTerrainTypes.GRASS,
-    RegionTerrainTypes.GRASS,
-    RegionTerrainTypes.DESERT,
-    RegionTerrainTypes.MOUNTAIN,
-    RegionTerrainTypes.MOUNTAIN,
-    RegionTerrainTypes.WATER,
-];
+const mapSettingToTerrainType: { [key:string]: RegionTerrain } = {
+    grass: RegionTerrainTypes.GRASS,
+    desert: RegionTerrainTypes.DESERT,
+    mountain: RegionTerrainTypes.MOUNTAIN,
+    water: RegionTerrainTypes.WATER,
+};
+
+/**
+ * Calculates the cumulative weights of the terrain types.
+ */
+const getCumulativeTerrainWeights = (terrainWeights: {[key: string]: number}): {[key: string]: number}=> {
+    let cumulativeValue = 0,
+        cumulativeWeights = {};
+
+    for (let [key, value] of Object.entries(terrainWeights)) {
+        cumulativeValue += value;
+        cumulativeWeights[key] = cumulativeValue;
+    }
+
+    return cumulativeWeights;
+};
+
+/**
+ * Performs a binary search for a value within a certain interval.
+ * Used to randomly select terrain types based on weight values.
+ */
+const intervalBinarySearch = (searchArr: number[], start: number, end: number, searchValue: number): number => {
+    // Sanity check input values
+    if (
+        end >= searchArr.length ||
+        start >=searchArr.length ||
+        start < 0 ||
+        start > end ||
+        searchArr[end] < searchValue
+    ) {
+        throw new RangeError('intervalBinarySearch() : Search paramters are out of range of searchArr.');
+    }
+
+    // Find mid indices
+    let mid = parseInt((start + end)/2, 10),
+        mid2 = mid - 1;
+
+    // searchValue will always be within the first provided interval, otherwise
+    // check if searchValue is within interval (mid2, mid].
+    if (
+        mid == 0 ||
+        (searchValue <= searchArr[mid] &&
+         searchValue > searchArr[mid2])
+    ) {
+        return mid;
+    }
+
+    // If searchValue is greater than mid, recurse right half
+    if (searchValue > searchArr[mid]) {
+        return intervalBinarySearch(searchArr, mid+1, end, searchValue);
+    }
+
+    // If searchValue is less than mid2, recurse left half
+    if (searchValue < searchArr[mid]) {
+        return intervalBinarySearch(searchArr, start, mid2, searchValue);
+    }
+
+    // Shouldn't ever happen, but just in case
+    return -1;
+};
+
+/**
+ * Returns a randomly selected terrain type based on the passed in weight
+ * values.
+ */
+const pickRandomTerrain = (terrainWeights: {[key: string]: number}): RegionTerrain => {
+    let cumulativeWeights = getCumulativeTerrainWeights(terrainWeights),
+        // $FlowFixMe - Suppress Object.values returning Array<mixed> type when we know we'll have Array<number>
+        searchArr = Object.values(cumulativeWeights),
+        keyArr = Object.keys(cumulativeWeights),
+        searchValue = Random.real(0, searchArr[searchArr.length-1], false)(Random.engines.nativeMath),
+        randomIndex = intervalBinarySearch(searchArr, 0, searchArr.length - 1, searchValue);
+
+    return mapSettingToTerrainType[keyArr[randomIndex]];
+};
 
 /**
  * Will randomly generate a set of regions that conform to the passed in width
@@ -41,19 +104,21 @@ const useableTerrains: RegionTerrain[] = [
  *
  * @param {number} worldWidth - The number of tiles that world will expand left to right
  * @param {number} worldHeight - The number of tiles that the world will expand top to bottom
+ * @param {
  *
  * @return {Map<string,Region>} - An Immutable map of randomly generated regions.
  */
 export const generateRandomWorld = (
     worldWidth: number,
-    worldHeight: number
+    worldHeight: number,
+    terrainWeights: any
 ): Map<string,Region> => {
     let regions: Map<string,Region> = new Map();
 
     for (let y = 0; y < worldHeight; y++) {
         for (let x = 0; x < worldWidth; x++) {
             let key: string = `region-${x}-${y}`,
-                terrain: RegionTerrain = Random.picker(useableTerrains)(Random.engines.nativeMath),
+                terrain: RegionTerrain = pickRandomTerrain(terrainWeights),
                 region: Region = new Region({
                     key,
                     x,

@@ -13,6 +13,7 @@ type Props = {
     appState: any,
     worldState: any,
     changeWorldSetting: any,
+    changeTerrainWeight: any,
     generateNewWorld: any,
     refineWorld: any,
     finishWorldGeneration: any,
@@ -31,6 +32,7 @@ export class AppComponent extends Component {
             <StartMenuComponent
                 worldState={this.props.worldState}
                 changeWorldSetting={this.props.changeWorldSetting}
+                changeTerrainWeight={this.props.changeTerrainWeight}
                 generateNewWorld={this.props.generateNewWorld}
                 refineWorld={this.props.refineWorld}
                 finishWorldGeneration={this.props.finishWorldGeneration}

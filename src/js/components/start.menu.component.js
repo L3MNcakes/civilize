@@ -10,6 +10,7 @@ import React from 'react';
 type Props = {
     worldState: any,
     changeWorldSetting: any,
+    changeTerrainWeight: any,
     generateNewWorld: any,
     refineWorld: any,
     finishWorldGeneration: any,
@@ -73,6 +74,7 @@ const buttonStyles = {
 export const StartMenuComponent = ({
     worldState,
     changeWorldSetting,
+    changeTerrainWeight,
     generateNewWorld,
     refineWorld,
     finishWorldGeneration
@@ -114,6 +116,45 @@ export const StartMenuComponent = ({
                     style={medInputStyles}
                     defaultValue={worldState.settings.cycles}
                     onBlur={ (e) => changeWorldSetting('cycles', e.target.value) }
+                />
+            </div>
+        </div>
+        <div style={titleStyles}>Terrain Weights</div>
+        <div style={inputContainerStyles}>
+            <div style={inputWrapperStyles}>
+                <span style={labelStyles}>Grass:</span>
+                <input
+                    type='number'
+                    style={smallInputStyles}
+                    defaultValue={worldState.settings.terrainWeights.grass}
+                    onBlur={ (e) => changeTerrainWeight('grass', e.target.value) }
+                />
+            </div>
+            <div style={inputWrapperStyles}>
+                <span style={labelStyles}>Desert:</span>
+                <input
+                    type='number'
+                    style={smallInputStyles}
+                    defaultValue={worldState.settings.terrainWeights.desert}
+                    onBlur={ (e) => changeTerrainWeight('desert', e.target.value) }
+                />
+            </div>
+            <div style={inputWrapperStyles}>
+                <span style={labelStyles}>Mountain:</span>
+                <input
+                    type='number'
+                    style={smallInputStyles}
+                    defaultValue={worldState.settings.terrainWeights.mountain}
+                    onBlur={ (e) => changeTerrainWeight('mountain', e.target.value) }
+                />
+            </div>
+            <div style={inputWrapperStyles}>
+                <span style={labelStyles}>Water:</span>
+                <input
+                    type='number'
+                    style={smallInputStyles}
+                    defaultValue={worldState.settings.terrainWeights.water}
+                    onBlur={ (e) => changeTerrainWeight('water', e.target.value) }
                 />
             </div>
         </div>

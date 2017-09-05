@@ -26,7 +26,6 @@ type RegionProps = {
     terrain?: RegionTerrain,
 };
 
-
 export const RegionTerrainTypes = {
     NONE: 'REGION_TERRAIN_NONE',
     GRASS: 'REGION_TERRAIN_GRASS',

@@ -24,6 +24,14 @@ const mapDispatchToProps = {
         }
     }),
 
+    changeTerrainWeight: (terrainType: string, value: number) => ({
+        type: WorldActionTypes.SET_TERRAIN_WEIGHT,
+        payload: {
+            terrainType,
+            value: parseInt(value, 10),
+        }
+    }),
+
     generateNewWorld: () => ({
         type: WorldActionTypes.GENERATE_REGIONS
     }),
