@@ -32,8 +32,10 @@ const getCumulativeTerrainWeights = (terrainWeights: {[key: string]: number}): {
         cumulativeWeights = {};
 
     for (let [key, value] of Object.entries(terrainWeights)) {
-        cumulativeValue += value;
-        cumulativeWeights[key] = cumulativeValue;
+        if (typeof value === 'number' && value > 0) {
+            cumulativeValue += value;
+            cumulativeWeights[key] = cumulativeValue;
+        }
     }
 
     return cumulativeWeights;

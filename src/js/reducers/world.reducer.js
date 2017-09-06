@@ -101,12 +101,20 @@ const WorldReducer : Reducer<WorldState, WorldAction> = (state = defaultState, a
             }
             return currentState;
         case WorldActionTypes.SET_WORLD_SETTING:
-            if (action.payload && action.payload.setting && action.payload.value) {
+            if (
+                action.payload &&
+                action.payload.setting &&
+                action.payload.value !== undefined
+            ) {
                 currentState.settings[action.payload.setting] = action.payload.value;
             }
             return currentState;
         case WorldActionTypes.SET_TERRAIN_WEIGHT:
-            if (action.payload && action.payload.terrainType && action.payload.value) {
+            if (
+                action.payload &&
+                action.payload.terrainType &&
+                action.payload.value !== undefined
+            ) {
                 currentState.settings.terrainWeights[action.payload.terrainType] = action.payload.value;
             }
             return currentState;
