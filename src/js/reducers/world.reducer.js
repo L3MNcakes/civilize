@@ -138,6 +138,6 @@ const setActiveRegion = (region: Region, currentState: WorldState): WorldState =
     }
 
     return currentState;
-}
+};
 
 export default WorldReducer;

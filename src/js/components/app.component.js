@@ -6,17 +6,12 @@
  */
 
 import React, { Component } from 'react';
-import { StartMenuComponent } from './start.menu.component';
-import WorldContainer from '../containers/world.container';
+import { StartMenuContainer } from '../containers/start.menu.container';
+import { WorldContainer } from '../containers/world.container';
 
 type Props = {
     appState: any,
     worldState: any,
-    changeWorldSetting: any,
-    changeTerrainWeight: any,
-    generateNewWorld: any,
-    refineWorld: any,
-    finishWorldGeneration: any,
 };
 
 const wrapperStyles = {
@@ -29,14 +24,7 @@ const wrapperStyles = {
 export class AppComponent extends Component {
     _renderStartMenu(): ?React.Element {
         return !this.props.appState.hasGeneratedWorld ? (
-            <StartMenuComponent
-                worldState={this.props.worldState}
-                changeWorldSetting={this.props.changeWorldSetting}
-                changeTerrainWeight={this.props.changeTerrainWeight}
-                generateNewWorld={this.props.generateNewWorld}
-                refineWorld={this.props.refineWorld}
-                finishWorldGeneration={this.props.finishWorldGeneration}
-            />
+            <StartMenuContainer />
         ) : null;
     }
 

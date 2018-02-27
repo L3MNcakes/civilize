@@ -5,16 +5,16 @@
  * @flow
  */
 
-import type { Region } from '../classes/Region.class'
+import type { Region } from '../classes/Region.class';
 
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 
-import WorldComponent from '../components/world.component'
+import WorldComponent from '../components/world.component';
 import { WorldActionTypes } from '../reducers/world.reducer';
 
 const mapStateToProps = (state) => ({
     currentState: state
-})
+});
 
 const mapDispatchToProps = {
     clickGenerateRegions: () => ({
@@ -38,6 +38,4 @@ const mapDispatchToProps = {
     })
 };
 
-const WorldContainer = connect(mapStateToProps, mapDispatchToProps)(WorldComponent)
-
-export default WorldContainer
+export const WorldContainer = connect(mapStateToProps, mapDispatchToProps)(WorldComponent);
