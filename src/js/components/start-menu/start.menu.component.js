@@ -4,8 +4,8 @@
  * @author <L3MNcakes@gmail.com>
  * @flow
  */
+import * as React from 'react';
 
-import React from 'react';
 import { StartMenuInputComponent, InputSizes } from './start-menu.input.component';
 
 type Props = {
@@ -54,7 +54,7 @@ export const StartMenuComponent = ({
     generateNewWorld,
     refineWorld,
     finishWorldGeneration
-}: Props): React.Element => (
+}: Props): React.Element<'div'> => (
     <div style={wrapperStyles}>
         <div style={titleStyles}>World Settings</div>
         <div style={inputContainerStyles}>
@@ -130,7 +130,7 @@ export const StartMenuComponent = ({
             type='button'
             style={buttonStyles}
             value='Generate World'
-            onClick={ (e) => handleButtonClick(
+            onClick={ () => handleButtonClick(
                 worldState,
                 generateNewWorld,
                 refineWorld,

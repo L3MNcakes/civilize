@@ -4,8 +4,7 @@
  * @author <L3MNcakes@gmail.com>
  * @flow
  */
-
-import React from 'react';
+import * as React from 'react';
 
 type Props = {
     currentState: any,
@@ -72,19 +71,19 @@ export const WorldConfigComponent = ({
             <input
                 type="button"
                 value="Generate New World"
-                onClick={ (evt) => clickGenerateRegions() }
+                onClick={ () => clickGenerateRegions() }
             />
         </div>
         <div>
             <input
                 type="button"
                 value="Next"
-                onClick={ (evt) => clickRefineNext() }
+                onClick={ () => clickRefineNext() }
             />
             <input
                 type="button"
                 value={currentState.world.isRefining ? 'Stop' : 'Start'}
-                onClick={ (evt) => clickToggleRefine() }
+                onClick={ () => clickToggleRefine() }
             />
         </div>
     </div>

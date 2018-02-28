@@ -4,8 +4,7 @@
  * @author <L3MNcakes@gmail.com>
  * @flow
  */
-
-import React from 'react';
+import * as React from 'react';
 
 type Props = {
     label: string,
@@ -65,7 +64,7 @@ export const StartMenuInputComponent = ({
     defaultValue,
     settingName,
     settingFn
-}: Props): React.Element => (
+}: Props): React.Element<'div'> => (
     <div style={inputWrapperStyles}>
         <span style={labelStyles}>{label}:</span>
         <input

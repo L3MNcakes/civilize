@@ -6,11 +6,11 @@
  */
 
 // TYPES
-import type { Reducer, Action } from 'redux';
+import type { Reducer } from 'redux';
 
 // IMPORTS
 import { Map } from 'immutable';
-import { Region, RegionTerrainTypes } from '../classes/Region.class';
+import { Region } from '../classes/Region.class';
 import { generateRandomWorld, refineWorld } from '../world.generator';
 
 export type WorldState = {
@@ -103,7 +103,7 @@ const WorldReducer : Reducer<WorldState, WorldAction> = (state = defaultState, a
         case WorldActionTypes.SET_WORLD_SETTING:
             if (
                 action.payload &&
-                action.payload.setting &&
+                typeof action.payload.setting === 'string' &&
                 action.payload.value !== undefined
             ) {
                 currentState.settings[action.payload.setting] = action.payload.value;
@@ -112,7 +112,7 @@ const WorldReducer : Reducer<WorldState, WorldAction> = (state = defaultState, a
         case WorldActionTypes.SET_TERRAIN_WEIGHT:
             if (
                 action.payload &&
-                action.payload.terrainType &&
+                typeof action.payload.terrainType === 'string' &&
                 action.payload.value !== undefined
             ) {
                 currentState.settings.terrainWeights[action.payload.terrainType] = action.payload.value;

@@ -4,10 +4,9 @@
  * @author <L3MNcakes@gmail.com>
  * @flow
  */
+import * as React from 'react';
 
-import type { RegionTerrain } from '../classes/Region.class'
-
-import React from 'react'
+import type { RegionTerrain } from '../classes/Region.class';
 import { Region, RegionTerrainTypes } from '../classes/Region.class';
 
 type Props = {
@@ -19,20 +18,20 @@ type Props = {
 const getTerrainColor = (terrain: RegionTerrain): string => {
     switch(terrain) {
         case RegionTerrainTypes.GRASS:
-            return 'green'
+            return 'green';
         case RegionTerrainTypes.DESERT:
-            return 'tan'
+            return 'tan';
         case RegionTerrainTypes.MOUNTAIN:
-            return 'saddlebrown'
+            return 'saddlebrown';
         case RegionTerrainTypes.WATER:
-            return 'blue'
+            return 'blue';
         default:
-            return 'white'
+            return 'white';
     }
-}
+};
 
 const calcStyles = (region: Region, tileSize: number) => {
-    let size = tileSize + "px",
+    let size = tileSize + 'px',
         left = region.x * (tileSize + 1) + 1,
         top = region.y * (tileSize + 1) + 1,
         backgroundColor = region.isActive ? '#F00' : getTerrainColor(region.terrain);
@@ -44,12 +43,12 @@ const calcStyles = (region: Region, tileSize: number) => {
         left,
         top,
         backgroundColor,
-    }
-}
+    };
+};
 
-export const RegionComponent = ({region, tileSize, clickRegion} : Props) => (
+export const RegionComponent = ({region, tileSize, clickRegion}: Props) => (
     <div
         style={calcStyles(region,tileSize)}
-        onClick={(evt) => clickRegion(region)}
+        onClick={() => clickRegion(region)}
     ></div>
-)
+);

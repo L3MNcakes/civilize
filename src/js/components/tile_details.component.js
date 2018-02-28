@@ -4,8 +4,8 @@
  * @author <L3MNcakes@gmail.com>
  * @flow
  */
+import * as React from 'react';
 
-import React from 'react';
 import { Region } from '../classes/Region.class';
 
 type Props = {
@@ -20,7 +20,7 @@ const wrapperStyles = {
     padding: '5px',
 };
 
-export const TileDetailsComponent = ({ region } : Props) => (
+export const TileDetailsComponent = ({ region }: Props) => (
     <div style={wrapperStyles}>
         <div>
             <strong>Key: </strong>

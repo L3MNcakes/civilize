@@ -4,14 +4,14 @@
  * @author <L3MNcakes@gmail.com>
  * @flow
  */
+import * as React from 'react';
 
-import React, { Component } from 'react';
 import { StartMenuContainer } from '../containers/start.menu.container';
 import { WorldContainer } from '../containers/world.container';
 
 type Props = {
     appState: any,
-    worldState: any,
+    worldState: any
 };
 
 const wrapperStyles = {
@@ -21,20 +21,20 @@ const wrapperStyles = {
     overflow: 'auto',
 };
 
-export class AppComponent extends Component {
-    _renderStartMenu(): ?React.Element {
+export class AppComponent extends React.Component<Props> {
+    _renderStartMenu(): ?React.Element<StartMenuContainer> {
         return !this.props.appState.hasGeneratedWorld ? (
             <StartMenuContainer />
         ) : null;
     }
 
-    _renderWorld(): ?React.Element {
+    _renderWorld(): ?React.Element<WorldContainer> {
         return this.props.appState.hasGeneratedWorld ? (
             <WorldContainer />
         ) : null;
     }
 
-    render(): React.Element {
+    render(): React.Element<'div'> {
         return (
             <div style={wrapperStyles}>
                 {this._renderStartMenu()}

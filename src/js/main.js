@@ -4,22 +4,27 @@
  * @author <L3MNcakes@gmail.com>
  * @flow
  */
+import * as React from 'react';
 
-import type { Store } from 'redux'
+import type { Store } from 'redux';
+import type { MainState } from './reducers/main.reducer';
 
-import React from 'react'
-import { render } from 'react-dom'
-import { Provider } from 'react-redux'
-import { createStore } from 'redux'
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 
 import { AppContainer } from './containers/app.container';
-import { MainReducer } from './reducers/main.reducer'
+import { MainReducer } from './reducers/main.reducer';
 
-export let store: Store = createStore(MainReducer)
+export let store: Store<MainState, any> = createStore(MainReducer);
 
-render(
-    <Provider store={store}>
-        <AppContainer />
-    </Provider>,
-    document.getElementById('root')
-);
+let rootEl: ?HTMLElement = document.getElementById('root');
+
+if (rootEl) {
+    render(
+        <Provider store={store}>
+            <AppContainer />
+        </Provider>,
+        rootEl
+    );
+}

@@ -16,8 +16,6 @@ export type AppAction = {
     payload: any
 };
 
-import { Map } from 'immutable';
-
 export const AppActionTypes = {
     SET_WORLD_GENERATED: 'APP_ACTION_SET_WORLD_GENERATED',
 };

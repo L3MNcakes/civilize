@@ -4,16 +4,15 @@
  * @author <L3MNcakes@gmail.com>
  * @flow
  */
+import * as React from 'react';
 
 // TYPES
 import type { MainState } from '../reducers/main.reducer';
 import type { Region } from '../classes/Region.class';
 
 // IMPORTS
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { RegionComponent } from './region.component';
-import { WorldConfigComponent } from './world_config.component';
-import { TileDetailsComponent } from './tile_details.component';
 
 type Props = {
     currentState: MainState,
@@ -23,7 +22,7 @@ type Props = {
 }
 
 const renderRegions = (currentState, clickRegion) => {
-    let render = []
+    let render = [];
 
     currentState.world.regions.forEach( (region, key) => {
         render.push(
@@ -33,29 +32,27 @@ const renderRegions = (currentState, clickRegion) => {
                 tileSize = {currentState.world.settings.tileSize}
                 clickRegion = {clickRegion}
             />
-        )
-    })
+        );
+    });
 
-    return render
-}
+    return render;
+};
 
 const calcStyles = (currentState: MainState) => {
-    let width: number = currentState.world.settings.width * currentState.world.settings.tileSize + currentState.world.settings.width + 1
-    let height: number = currentState.world.settings.height * currentState.world.settings.tileSize + currentState.world.settings.height + 1
+    let width: number = currentState.world.settings.width * currentState.world.settings.tileSize + currentState.world.settings.width + 1;
+    let height: number = currentState.world.settings.height * currentState.world.settings.tileSize + currentState.world.settings.height + 1;
 
     return {
-        width: width + "px",
-        height: height + "px",
-        position: "relative",
-        border: "3px solid #333",
-        margin: "0px auto",
-        overflow: "hidden"
-    }
-}
+        width: width + 'px',
+        height: height + 'px',
+        position: 'relative',
+        border: '3px solid #333',
+        margin: '0px auto',
+        overflow: 'hidden'
+    };
+};
 
-export default class WorldComponent extends Component
-{
-
+export default class WorldComponent extends Component<Props> {
     refineInterval: any;
 
     constructor(props: Props) {
@@ -64,7 +61,7 @@ export default class WorldComponent extends Component
         this.refineInterval = null;
     }
 
-    componentWillUpdate(nextProps: Props, nextState: any) {
+    componentWillUpdate(nextProps: Props) {
         if (nextProps.currentState.world.isRefining && !this.refineInterval) {
             this.refineInterval = setInterval( () => nextProps.clickRefineNext(), 100 );
         } else if (!nextProps.currentState.world.isRefining && this.refineInterval) {

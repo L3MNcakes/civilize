@@ -17,7 +17,7 @@ import { Region, RegionTerrainTypes } from './classes/Region.class';
  * A map of the setting strings to the actual terrain type.
  * @TODO Find a way to make this not necessary
  */
-const mapSettingToTerrainType: { [key:string]: RegionTerrain } = {
+const mapSettingToTerrainType: { [key: string]: RegionTerrain } = {
     grass: RegionTerrainTypes.GRASS,
     desert: RegionTerrainTypes.DESERT,
     mountain: RegionTerrainTypes.MOUNTAIN,
@@ -92,7 +92,7 @@ const intervalBinarySearch = (searchArr: number[], start: number, end: number, s
 const pickRandomTerrain = (terrainWeights: {[key: string]: number}): RegionTerrain => {
     let cumulativeWeights = getCumulativeTerrainWeights(terrainWeights),
         // $FlowFixMe - Suppress Object.values returning Array<mixed> type when we know we'll have Array<number>
-        searchArr = Object.values(cumulativeWeights),
+        searchArr: number[] = Object.values(cumulativeWeights),
         keyArr = Object.keys(cumulativeWeights),
         searchValue = Random.real(0, searchArr[searchArr.length-1], false)(Random.engines.nativeMath),
         randomIndex = intervalBinarySearch(searchArr, 0, searchArr.length - 1, searchValue);
@@ -192,4 +192,4 @@ const refineRegion = (region: Region, currentRegions: Map<string, Region>): Map<
     });
 
     return currentRegions;
-}
+};
