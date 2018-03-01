@@ -14,7 +14,6 @@ type Props = {
     changeTerrainWeight: any,
     generateNewWorld: any,
     refineWorld: any,
-    finishWorldGeneration: any,
 };
 
 const wrapperStyles = {
@@ -52,8 +51,7 @@ export const StartMenuComponent = ({
     changeWorldSetting,
     changeTerrainWeight,
     generateNewWorld,
-    refineWorld,
-    finishWorldGeneration
+    refineWorld
 }: Props): React.Element<'div'> => (
     <div style={wrapperStyles}>
         <div style={titleStyles}>World Settings</div>
@@ -130,22 +128,10 @@ export const StartMenuComponent = ({
             type='button'
             style={buttonStyles}
             value='Generate World'
-            onClick={ () => handleButtonClick(
-                worldState,
-                generateNewWorld,
-                refineWorld,
-                finishWorldGeneration
-            )}
+            onClick={ () => {
+                generateNewWorld();
+                refineWorld();
+            }}
         />
     </div>
 );
-
-const handleButtonClick = (worldState, generateNewWorld, refineWorld, finishWorldGeneration) => {
-    generateNewWorld();
-
-    for (let i = 0; i < worldState.settings.cycles; i++) {
-        refineWorld();
-    }
-
-    finishWorldGeneration();
-};

@@ -11,23 +11,26 @@ import type { Reducer } from 'redux';
 // IMPORTS
 import { Map } from 'immutable';
 import { Region } from '../classes/Region.class';
-import { generateRandomWorld, refineWorld } from '../world.generator';
+import { generateRandomWorld, refineWorld} from '../world.generator';
+
+export type WorldSettings = {
+    width: number,
+    height: number,
+    tileSize: number,
+    cycles: number,
+    terrainWeights: {
+        grass: number,
+        desert: number,
+        mountain: number,
+        water: number,
+    }
+};
 
 export type WorldState = {
-    settings: {
-        width: number,
-        height: number,
-        tileSize: number,
-        cycles: number,
-        terrainWeights: {
-            grass: number,
-            desert: number,
-            mountain: number,
-            water: number,
-        }
-    },
+    settings: WorldSettings,
     regions: Map<string,Region>,
-    activeRegion: ?Region
+    activeRegion: ?Region,
+    hasGeneratedWorld: boolean,
 };
 
 export type WorldSettingsPayload = {
@@ -41,8 +44,8 @@ export type WorldAction = {
 };
 
 export const WorldActionTypes = {
-    GENERATE_REGIONS: 'WORLD_ACTION_GENERATE_REGIONS',
-    REFINE_NEXT: 'WORLD_ACTION_REFINE_NEXT',
+    GENERATE_NEW_WORLD: 'WORLD_ACTION_GENERATE_NEW_WORLD',
+    REFINE_WORLD: 'WORLD_ACTION_REFINE_WORLD',
     SET_ACTIVE_REGION: 'WORLD_ACTION_SET_ACTIVE_REGION',
     SET_WORLD_SETTING: 'WORLD_ACTION_SET_WORLD_SETTINGS',
     SET_TERRAIN_WEIGHT: 'WORLD_ACTION_SET_TERRAIN_WEIGHT',
@@ -62,23 +65,26 @@ const defaultState = {
         }
     },
     regions: new Map(), // Map of all current regions
-    isRefining: false,  // Whether or not the world regions are currently being refined
     activeRegion: null, // The region that is currently active
+    hasGeneratedWorld: false
 };
 
 const WorldReducer : Reducer<WorldState, WorldAction> = (state = defaultState, action) => {
     let currentState: WorldState = Object.assign({}, state);
 
     switch(action.type) {
-        case WorldActionTypes.GENERATE_REGIONS:
+        case WorldActionTypes.GENERATE_NEW_WORLD:
             currentState.regions = generateRandomWorld(
                 currentState.settings.width,
                 currentState.settings.height,
                 currentState.settings.terrainWeights
             );
             return currentState;
-        case WorldActionTypes.REFINE_NEXT:
-            currentState.regions = refineWorld(currentState.regions);
+        case WorldActionTypes.REFINE_WORLD:
+            for (let i = 0; i < currentState.settings.cycles; i++) {
+                currentState.regions = refineWorld(currentState.regions);
+            }
+            currentState.hasGeneratedWorld = true;
             return currentState;
         case WorldActionTypes.SET_ACTIVE_REGION:
             if (action.payload instanceof Region) {

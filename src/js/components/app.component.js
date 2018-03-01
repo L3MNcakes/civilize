@@ -23,13 +23,13 @@ const wrapperStyles = {
 
 export class AppComponent extends React.Component<Props> {
     _renderStartMenu(): ?React.Element<StartMenuContainer> {
-        return !this.props.appState.hasGeneratedWorld ? (
+        return !this.props.worldState.hasGeneratedWorld ? (
             <StartMenuContainer />
         ) : null;
     }
 
     _renderWorld(): ?React.Element<WorldContainer> {
-        return this.props.appState.hasGeneratedWorld ? (
+        return this.props.worldState.hasGeneratedWorld ? (
             <WorldContainer />
         ) : null;
     }

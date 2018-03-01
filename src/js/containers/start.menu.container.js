@@ -8,7 +8,6 @@
 import { connect } from 'react-redux';
 import { StartMenuComponent } from '../components/start-menu/start.menu.component';
 import { WorldActionTypes } from '../reducers/world.reducer';
-import { AppActionTypes } from '../reducers/app.reducer';
 
 const mapStateToProps = (state) => ({
     worldState: state.world
@@ -32,15 +31,11 @@ const mapDispatchToProps = {
     }),
 
     generateNewWorld: () => ({
-        type: WorldActionTypes.GENERATE_REGIONS
+        type: WorldActionTypes.GENERATE_NEW_WORLD
     }),
 
     refineWorld: () => ({
-        type: WorldActionTypes.REFINE_NEXT
-    }),
-
-    finishWorldGeneration: () => ({
-        type: AppActionTypes.SET_WORLD_GENERATED
+        type: WorldActionTypes.REFINE_WORLD
     }),
 };
 
