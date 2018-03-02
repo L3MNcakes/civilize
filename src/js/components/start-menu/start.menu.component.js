@@ -124,6 +124,17 @@ export const StartMenuComponent = ({
                 settingFn={changeTerrainWeight}
             />
         </div>
+        <div style={titleStyles}>Realm Settings</div>
+        <div style={inputContainerStyles}>
+            <StartMenuInputComponent
+                label='Number of Realms'
+                size={InputSizes.SMALL}
+                inputType='number'
+                defaultValue={worldState.settings.numRealms}
+                settingName='numRealms'
+                settingFn={changeWorldSetting}
+            />
+        </div>
         <input
             type='button'
             style={buttonStyles}

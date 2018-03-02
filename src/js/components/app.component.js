@@ -8,10 +8,12 @@ import * as React from 'react';
 
 import { StartMenuContainer } from '../containers/start.menu.container';
 import { WorldContainer } from '../containers/world.container';
+import { MapModeComponent } from './map_mode.component';
 
 type Props = {
     appState: any,
-    worldState: any
+    worldState: any,
+    setMapMode: any,
 };
 
 const wrapperStyles = {
@@ -22,15 +24,23 @@ const wrapperStyles = {
 };
 
 export class AppComponent extends React.Component<Props> {
-    _renderStartMenu(): ?React.Element<StartMenuContainer> {
+    _renderStartMenu(): ?React.Element<typeof StartMenuContainer> {
         return !this.props.worldState.hasGeneratedWorld ? (
             <StartMenuContainer />
         ) : null;
     }
 
-    _renderWorld(): ?React.Element<WorldContainer> {
+    _renderWorld(): ?React.Element<typeof WorldContainer> {
         return this.props.worldState.hasGeneratedWorld ? (
             <WorldContainer />
+        ) : null;
+    }
+
+    _renderMapMode(): ?React.Element<typeof MapModeComponent> {
+        return this.props.worldState.hasGeneratedWorld ? (
+            <MapModeComponent
+                setMapMode={this.props.setMapMode}
+            />
         ) : null;
     }
 
@@ -39,6 +49,7 @@ export class AppComponent extends React.Component<Props> {
             <div style={wrapperStyles}>
                 {this._renderStartMenu()}
                 {this._renderWorld()}
+                {this._renderMapMode()}
             </div>
         );
     }

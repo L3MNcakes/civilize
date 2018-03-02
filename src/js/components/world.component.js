@@ -27,6 +27,7 @@ const renderRegions = (currentState, clickRegion) => {
                 key = {key}
                 region = {region}
                 tileSize = {currentState.world.settings.tileSize}
+                mapMode = {currentState.app.mapMode}
                 clickRegion = {clickRegion}
             />
         );

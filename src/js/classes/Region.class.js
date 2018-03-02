@@ -8,6 +8,7 @@
 import type { MainState } from '../reducers/main.reducer';
 
 import { store } from '../main';
+import { Realm } from './Realm.class';
 
 export type RegionTerrain = (
     'REGION_TERRAIN_NONE' |
@@ -24,6 +25,7 @@ type RegionProps = {
     isActive?: boolean,
     isHover?: boolean,
     terrain?: RegionTerrain,
+    realm?: Realm
 };
 
 export const RegionTerrainTypes = {
@@ -42,6 +44,7 @@ export class Region
     isActive: boolean;
     isHover: boolean;
     terrain: RegionTerrain;
+    realm: Realm;
 
     constructor(region: ?RegionProps) {
         this.key = region && region.key !== undefined ? region.key : '';
@@ -50,6 +53,7 @@ export class Region
         this.isActive = region && region.isActive !== undefined ? region.isActive : false;
         this.isHover = region && region.isHover !== undefined ? region.isHover : false;
         this.terrain = region && region.terrain !== undefined ? region.terrain : RegionTerrainTypes.NONE;
+        this.realm = region && region.realm !== undefined ? region.realm : new Realm();
     }
 
     static fetchRegion(key: string): Region {

@@ -10,8 +10,9 @@ import type { RegionTerrain } from './classes/Region.class';
 
 // IMPORTS
 import Random from 'random-js';
-import { Map } from 'immutable';
+import { Map, Set } from 'immutable';
 import { Region, RegionTerrainTypes } from './classes/Region.class';
+import { Realm } from './classes/Realm.class';
 
 /**
  * A map of the setting strings to the actual terrain type.
@@ -192,4 +193,31 @@ const refineRegion = (region: Region, currentRegions: Map<string, Region>): Map<
     });
 
     return currentRegions;
+};
+
+export const generateRealms = (num: number): Set<Realm> => {
+    let realms = new Set();
+
+    for(let i = 0; i < num; i++) {
+        realms = realms.add(new Realm(null, true));
+    }
+
+    return realms;
+};
+
+export const assignRealms = (realms: Set<Realm>, regions: Map<string, Region>, num: number): Map<string, Region> => {
+    let shuffledKeys = Random.sample(
+        Random.engines.nativeMath,
+        regions.keySeq().toArray(),
+        num
+    );
+
+    for (let key of shuffledKeys) {
+        let region = regions.get(key);
+        region.realm = Random.pick(Random.engines.nativeMath, realms.toArray());
+
+        regions = regions.set(key, region);
+    }
+
+    return regions;
 };

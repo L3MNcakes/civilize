@@ -9,15 +9,22 @@
 import type { Reducer } from 'redux';
 
 // IMPORTS
-import { Map } from 'immutable';
+import { Map, Set } from 'immutable';
 import { Region } from '../classes/Region.class';
-import { generateRandomWorld, refineWorld} from '../world.generator';
+import { Realm } from '../classes/Realm.class';
+import {
+    generateRandomWorld,
+    refineWorld,
+    generateRealms,
+    assignRealms
+} from '../world.generator';
 
 export type WorldSettings = {
     width: number,
     height: number,
     tileSize: number,
     cycles: number,
+    numRealms: number,
     terrainWeights: {
         grass: number,
         desert: number,
@@ -57,6 +64,7 @@ const defaultState = {
         height: 25,
         tileSize: 15,
         cycles: 200,
+        numRealms: 5,
         terrainWeights: {
             grass: 1,
             desert: 1,
@@ -70,7 +78,8 @@ const defaultState = {
 };
 
 const WorldReducer : Reducer<WorldState, WorldAction> = (state = defaultState, action) => {
-    let currentState: WorldState = Object.assign({}, state);
+    let currentState: WorldState = Object.assign({}, state),
+        realms: Set<Realm>;
 
     switch(action.type) {
         case WorldActionTypes.GENERATE_NEW_WORLD:
@@ -84,6 +93,8 @@ const WorldReducer : Reducer<WorldState, WorldAction> = (state = defaultState, a
             for (let i = 0; i < currentState.settings.cycles; i++) {
                 currentState.regions = refineWorld(currentState.regions);
             }
+            realms = generateRealms(currentState.settings.numRealms);
+            currentState.regions = assignRealms(realms, currentState.regions, realms.size);
             currentState.hasGeneratedWorld = true;
             return currentState;
         case WorldActionTypes.SET_ACTIVE_REGION:
