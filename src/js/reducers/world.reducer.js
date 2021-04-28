@@ -36,6 +36,7 @@ export type WorldSettings = {
 export type WorldState = {
     settings: WorldSettings,
     regions: Map<string,Region>,
+    realms: Set<Realm>,
     activeRegion: ?Region,
     hasGeneratedWorld: boolean,
 };
@@ -73,13 +74,13 @@ const defaultState = {
         }
     },
     regions: new Map(), // Map of all current regions
+    realms: new Set(),
     activeRegion: null, // The region that is currently active
     hasGeneratedWorld: false
 };
 
 const WorldReducer : Reducer<WorldState, WorldAction> = (state = defaultState, action) => {
-    let currentState: WorldState = Object.assign({}, state),
-        realms: Set<Realm>;
+    let currentState: WorldState = Object.assign({}, state);
 
     switch(action.type) {
         case WorldActionTypes.GENERATE_NEW_WORLD:
@@ -93,8 +94,8 @@ const WorldReducer : Reducer<WorldState, WorldAction> = (state = defaultState, a
             for (let i = 0; i < currentState.settings.cycles; i++) {
                 currentState.regions = refineWorld(currentState.regions);
             }
-            realms = generateRealms(currentState.settings.numRealms);
-            currentState.regions = assignRealms(realms, currentState.regions, realms.size);
+            currentState.realms = generateRealms(currentState.settings.numRealms);
+            currentState.regions = assignRealms(currentState.realms, currentState.regions, currentState.realms.size);
             currentState.hasGeneratedWorld = true;
             return currentState;
         case WorldActionTypes.SET_ACTIVE_REGION:

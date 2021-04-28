@@ -5,10 +5,13 @@
  * @flow
  */
 import Random from 'random-js';
+import { Set } from 'immutable';
+import { Region } from './Region.class';
 
 type RealmProps = {
     name?: string;
     color?: string;
+    regions ?: Set<Region>;
 };
 
 const getRandomName = (): string => {
@@ -29,6 +32,7 @@ export class Realm
 {
     name: string;
     color: string;
+    regions: Set<Region>;
 
     constructor(realm: ?RealmProps, initRandom: boolean = false) {
         if (initRandom) {
@@ -38,6 +42,7 @@ export class Realm
             this.name = realm && realm.name !== undefined ? realm.name : '';
             this.color = realm && realm.color !== undefined ? realm.color : '#333';
         }
-    }
 
+        this.regions = new Set();
+    }
 }

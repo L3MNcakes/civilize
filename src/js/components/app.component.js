@@ -9,6 +9,7 @@ import * as React from 'react';
 import { StartMenuContainer } from '../containers/start.menu.container';
 import { WorldContainer } from '../containers/world.container';
 import { MapModeComponent } from './map_mode.component';
+import { TileDetailsComponent } from './tile_details.component';
 
 type Props = {
     appState: any,
@@ -44,12 +45,21 @@ export class AppComponent extends React.Component<Props> {
         ) : null;
     }
 
+    _renderTileDetails(): ?React.Element<typeof TileDetailsComponent> {
+        return this.props.worldState.activeRegion ? (
+            <TileDetailsComponent
+                region={this.props.worldState.activeRegion}
+            />
+        ) : null;
+    }
+
     render(): React.Element<'div'> {
         return (
             <div style={wrapperStyles}>
                 {this._renderStartMenu()}
                 {this._renderWorld()}
                 {this._renderMapMode()}
+                {this._renderTileDetails()}
             </div>
         );
     }

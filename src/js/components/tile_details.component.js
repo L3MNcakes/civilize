@@ -18,6 +18,7 @@ const wrapperStyles = {
     display: 'inline-block',
     margin: '0px 5px',
     padding: '5px',
+    backgroundColor: '#EEE',
 };
 
 export const TileDetailsComponent = ({ region }: Props) => (
@@ -37,6 +38,10 @@ export const TileDetailsComponent = ({ region }: Props) => (
         <div>
             <strong>Terrain: </strong>
             {region ? region.terrain : ''}
+        </div>
+        <div>
+            <strong>Realm: </strong>
+            {region && region.realm ? region.realm.name : ''}
         </div>
     </div>
 );

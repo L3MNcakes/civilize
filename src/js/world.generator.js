@@ -107,7 +107,7 @@ const pickRandomTerrain = (terrainWeights: {[key: string]: number}): RegionTerra
  *
  * @param {number} worldWidth - The number of tiles that world will expand left to right
  * @param {number} worldHeight - The number of tiles that the world will expand top to bottom
- * @param {
+ * @param {any} terrainWeights - Weight values for the terrain types.
  *
  * @return {Map<string,Region>} - An Immutable map of randomly generated regions.
  */
@@ -134,7 +134,6 @@ export const generateRandomWorld = (
             regions = regions.set(key, region);
         }
     }
-
 
     return regions;
 };
@@ -213,8 +212,11 @@ export const assignRealms = (realms: Set<Realm>, regions: Map<string, Region>, n
     );
 
     for (let key of shuffledKeys) {
-        let region = regions.get(key);
-        region.realm = Random.pick(Random.engines.nativeMath, realms.toArray());
+        let region = regions.get(key),
+            realm = Random.pick(Random.engines.nativeMath, realms.toArray());
+
+        realm.regions.add(region);
+        region.realm = realm;
 
         regions = regions.set(key, region);
     }
